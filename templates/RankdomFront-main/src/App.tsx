@@ -1,39 +1,56 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
-import TopBar from './TopBar';
+
+const categories = [
+  { name: 'Sport', href: '/sport', icon: '🏅' },
+  { name: 'Movies', href: '/movies', icon: '🎬' },
+  { name: 'Food', href: '/food', icon: '🍔' },
+  { name: 'Politics', href: '/politics', icon: '🏛️' },
+  { name: 'Jobs', href: '/jobs', icon: '💼' },
+  { name: 'Nature', href: '/nature', icon: '🌿' },
+  { name: 'News', href: '/news', icon: '📰' },
+  { name: 'History', href: '/history', icon: '🏺' },
+];
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-
-      <TopBar />
-
-      <div className="content">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-
-        <h1>Vite + React</h1>
-        <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
+    <div className="app">
+      <header className="topbar">
+        <div className="container">
+          <h1>Rankdom</h1>
+          <nav>
+            <ul>
+              <li><a href="/routeGoogle">Login holder 🥜</a></li>
+              <li><a href="/Support">Support?</a></li>
+            </ul>
+          </nav>
         </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
-      </div>
-    </>
+      </header>
+
+      <main className="main-content">
+        <div className="container">
+          <h2>Categories</h2>
+          <div className="category-grid">
+            {categories.map((category) => (
+              <a key={category.name} href={category.href} className="category-button">
+                <span className="category-icon">{category.icon}</span>
+                <span className="category-name">{category.name}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </main>
+
+      <footer className="footer">
+        <div className="container">
+          <p>&copy; 2024 Rankdom. Vi har ikke nogen rettigheder xD.</p>
+          <nav>
+            <ul>
+
+            </ul>
+          </nav>
+        </div>
+      </footer>
+    </div>
   );
 }
 
