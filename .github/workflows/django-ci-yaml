@@ -1,10 +1,6 @@
 name: Django CI
 
-on:
-  push:
-    branches: [ development ]
-  pull_request:
-    branches: [ development ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -28,4 +24,3 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
-        continue-on-error: false
