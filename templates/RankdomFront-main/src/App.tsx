@@ -29,15 +29,17 @@ function App() {
           <div className="container">
                 <a href="/"><h1>Rankdom</h1></a>
             <nav>
-            <ul>
+                <ul>
+
                     <li><a href="/routeGoogle">Login holder 🥜</a></li>
                     <li><a href="/Support">Support?</a></li>
-                  </ul>
-                </nav>
+                    <li><a href="/PreferedPool">Prefered?</a></li>
+                </ul>
+            </nav>
           </div>
         </header>
 
-        <main className="main-content">
+          <main className="main-content">
           <div className="container">
             <Routes>
               <Route path="/" element={<HomePage />} />
