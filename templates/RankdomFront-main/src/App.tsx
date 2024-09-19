@@ -46,7 +46,9 @@ function App() {
             <a href="/"><h1>Rankdom</h1></a>
             <nav>
               <ul>
-                <li><a href="/routeGoogle">Login holder 🥜</a></li>
+                <li><a href="/routeGoogle">Login  🥜</a></li>
+                <li><a href="/Register">Register  🥜</a></li>
+
 
                 <li><a href="/Support">Support?</a></li>
                 <li><a href="/PreferedPool">Prefered?</a></li>
@@ -66,6 +68,14 @@ function App() {
                   element={<category.component />}
                 />
               ))}
+              <Route
+                  path="/Register"
+                  element={<Register name={"Register"}  />}
+              />
+              <Route
+                  path="/routeGoogle"
+                  element={<Register name={"Login"}  />}
+              />
             </Routes>
           </div>
         </main>
