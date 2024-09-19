@@ -1,5 +1,6 @@
 import {useState} from "react";
-function register() {
+
+function Register() {
     const [password,setPassword] =useState("")
     const [email,setEmail] =useState("")
     const [username,setUsername] =useState("")
@@ -17,14 +18,12 @@ function register() {
     }
 
     return (
-
-
         <form onSubmit={handleSubmit} className={"form-container"}>
             <h1> "Register"</h1>
             <input className="form-input"  type={ "email"}
                    value={email}
                    onChange= {(e)=>setEmail(e.target.value)}
-                   placeholder={"email"}/> />
+                   placeholder={"email"}/>
             <input className="form-input"
             type={ "text"}
             value={username}
@@ -33,9 +32,11 @@ function register() {
             <input className="form-input" type={ "password"}
                    value={password}
                    onChange= {(e)=>setPassword(e.target.value)}
-                   placeholder={"password"}/>  />
+                   placeholder={"password"}/>
             <button className={"form-button"} type="submit">Search</button>
         </form>
   );
 }
+
+export default Register;
 

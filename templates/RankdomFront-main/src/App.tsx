@@ -1,4 +1,5 @@
 import './App.css';
+import './Register.tsx';
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,6 +15,9 @@ import Jobs from './components/Jobs';
 import Nature from './components/Nature';
 import News from './components/News';
 import History from './components/History';
+import Register from "./Register.tsx";
+
+
 
 interface Category {
   name: string;
@@ -43,6 +47,7 @@ function App() {
             <nav>
               <ul>
                 <li><a href="/routeGoogle">Login holder 🥜</a></li>
+
                 <li><a href="/Support">Support?</a></li>
                 <li><a href="/PreferedPool">Prefered?</a></li>
               </ul>
