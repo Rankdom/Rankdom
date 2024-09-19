@@ -16,5 +16,5 @@ class logInTest(TestCase):
     def test_creaete_user(self):
         user = logIn(username="testuser", password="testpassword")
 
-        self.assertEqual(user.username, "testdsfsduser")
+        self.assertEqual(user.username, "testdsf34sduser")
         self.assertEqual(user.password, "testpassword")
