@@ -6,19 +6,31 @@ import {
   Link,
 } from 'react-router-dom';
 
-interface CategoryPageProps {
-  name: string;
-}
+import Sport from './components/Sport';
+import Movies from './components/Movies';
+import Food from './components/Food';
+import Politics from './components/Politics';
+import Jobs from './components/Jobs';
+import Nature from './components/Nature';
+import News from './components/News';
+import History from './components/History';
 
-const categories = [
-  { name: 'Sport', href: '/sport', icon: '🏅' },
-  { name: 'Movies', href: '/movies', icon: '🎬' },
-  { name: 'Food', href: '/food', icon: '🍔' },
-  { name: 'Politics', href: '/politics', icon: '🏛️' },
-  { name: 'Jobs', href: '/jobs', icon: '💼' },
-  { name: 'Nature', href: '/nature', icon: '🌿' },
-  { name: 'News', href: '/news', icon: '📰' },
-  { name: 'History', href: '/history', icon: '🏺' },
+interface Category {
+  name: string;
+  href: string;
+  icon: string;
+  component: React.ComponentType;
+}
+/* Her bruges en : react.Component, vigtigt fordi her bruges en React.FC = () component under hver component.TSX fil :) */
+const categories: Category[] = [
+  { name: 'Sport', href: '/sport', icon: '🏅', component: Sport },
+  { name: 'Movies', href: '/movies', icon: '🎬', component: Movies },
+  { name: 'Food', href: '/food', icon: '🍔', component: Food },
+  { name: 'Politics', href: '/politics', icon: '🏛️', component: Politics },
+  { name: 'Jobs', href: '/jobs', icon: '💼', component: Jobs },
+  { name: 'Nature', href: '/nature', icon: '🌿', component: Nature },
+  { name: 'News', href: '/news', icon: '📰', component: News },
+  { name: 'History', href: '/history', icon: '🏺', component: History },
 ];
 
 function App() {
@@ -27,19 +39,18 @@ function App() {
       <div className="app">
         <header className="topbar">
           <div className="container">
-                <a href="/"><h1>Rankdom</h1></a>
+            <a href="/"><h1>Rankdom</h1></a>
             <nav>
-                <ul>
-
-                    <li><a href="/routeGoogle">Login holder 🥜</a></li>
-                    <li><a href="/Support">Support?</a></li>
-                    <li><a href="/PreferedPool">Prefered?</a></li>
-                </ul>
+              <ul>
+                <li><a href="/routeGoogle">Login holder 🥜</a></li>
+                <li><a href="/Support">Support?</a></li>
+                <li><a href="/PreferedPool">Prefered?</a></li>
+              </ul>
             </nav>
           </div>
         </header>
 
-          <main className="main-content">
+        <main className="main-content">
           <div className="container">
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -47,7 +58,7 @@ function App() {
                 <Route
                   key={category.name}
                   path={category.href}
-                  element={<CategoryPage name={category.name} />}
+                  element={<category.component />}
                 />
               ))}
             </Routes>
@@ -82,15 +93,6 @@ function CategoryGrid() {
           <span className="category-name">{category.name}</span>
         </Link>
       ))}
-    </div>
-  );
-}
-
-function CategoryPage({ name }: CategoryPageProps) {
-  return (
-    <div>
-      <h2>{name} Page</h2>
-      <p>This is the {name} page content.</p>
     </div>
   );
 }
