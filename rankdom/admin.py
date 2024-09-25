@@ -2,6 +2,7 @@ from django.contrib import admin
 
 # import the model Rankdom
 from .models import Rankdom
+from django.contrib.auth.models import User
 
 
 # create a class for the admin-model integration
@@ -14,4 +15,4 @@ class RankdomAdmin(admin.ModelAdmin):
 # model class and the Admin model class
 # using the register() method
 # of admin.site class
-admin.site.register(Rankdom, RankdomAdmin)
+admin.site.register(Rankdom, User)

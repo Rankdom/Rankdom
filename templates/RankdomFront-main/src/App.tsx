@@ -1,10 +1,10 @@
 import './App.css';
-import './Register.tsx';
+import './Form.tsx';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
+  Link, BrowserRouter,
 } from 'react-router-dom';
 
 import Sport from './components/Sport';
@@ -15,7 +15,7 @@ import Jobs from './components/Jobs';
 import Nature from './components/Nature';
 import News from './components/News';
 import History from './components/History';
-import Register from "./Register.tsx";
+import Form from "./Form.tsx";
 
 
 
@@ -70,11 +70,11 @@ function App() {
               ))}
               <Route
                   path="/Register"
-                  element={<Register name={"Register"}  />}
+                  element={<Form route="/Register/" name={"Register"}  />}
               />
               <Route
                   path="/routeGoogle"
-                  element={<Register name={"Login"}  />}
+                  element={<Form route="/routeGoogle/" name={"Login"}  />}
               />
             </Routes>
           </div>
