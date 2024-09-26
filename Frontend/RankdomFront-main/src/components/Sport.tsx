@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+
+
+import Question from "../Question.tsx";
 
 const sportsSubcategories = [
   { name: 'Soccer', href: '/sport/soccer', icon: '⚽', questions: [
-    { name: 'Messi', href: '/sport/soccer/Messi' },
-    { name: 'Ronaldo', href: '/sport/soccer/Ronaldo' },
+    { name: 'Messi', href: '/sport/soccer/Messi', imageUrl: 'https://cdn.britannica.com/35/238335-050-2CB2EB8A/Lionel-Messi-Argentina-Netherlands-World-Cup-Qatar-2022.jpg'  },
+    { name: 'Ronaldo', href: '/sport/soccer/Ronaldo', imageUrl: 'https://editorial.uefa.com/resources/027c-16d30c80a3e5-8717973e3fb0-1000/portugal_v_france_-_uefa_euro_2020_group_f.jpeg' },
   ] },
   { name: 'Basketball', href: '/sport/basketball', icon: '🏀', questions: [] },
   { name: 'Baseball', href: '/sport/baseball', icon: '⚾', questions: [] },
@@ -26,7 +28,7 @@ const Sport: React.FC = () => {
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
 
   const handleSportClick = (sportName: string) => {
-    setSelectedSport(sportName); // Set the selected sport
+    setSelectedSport(sportName); // set sporten!
   };
 
   const currentSport = sportsSubcategories.find((sport) => sport.name === selectedSport);
@@ -35,7 +37,7 @@ const Sport: React.FC = () => {
     <div>
       <h2>Sport Subcategories</h2>
       {!selectedSport ? (
-        // Show main sport categories when no sport is selected
+        // Show main sport categories
         <div className="category-grid">
           {sportsSubcategories.map((subcategory) => (
             <button
@@ -49,16 +51,14 @@ const Sport: React.FC = () => {
           ))}
         </div>
       ) : (
-        // Show subcategories (like players) if a sport is selected
+        // Hvis subcategories hvis valgt.
         <div>
           <h3>{selectedSport}</h3>
           {currentSport && currentSport.questions.length > 0 ? (
             <div className="category-grid">
-              {currentSport.questions.map((questions) => (
-                <Link key={questions.name} to={questions.href} className="category-button">
-                  {questions.name}
-                </Link>
-              ))}
+              {currentSport.questions.map((question) => (
+        <Question key={question.name} title={question.name} imageUrl= {question.imageUrl} />
+          ))}
             </div>
           ) : (
             <p>No Questions available for {selectedSport}</p>
