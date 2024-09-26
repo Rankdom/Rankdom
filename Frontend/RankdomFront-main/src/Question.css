@@ -110,4 +110,18 @@
     width: 1rem;
     height: 1rem;
   }
+
 }
+.vote-block.disabled {
+  pointer-events: none;
+  opacity: 0.5; /* Dim the disabled question */
+}
+
+.vote-block.disabled img {
+  filter: grayscale(100%);
+}
+.relative {
+  position: relative;
+}
+
+

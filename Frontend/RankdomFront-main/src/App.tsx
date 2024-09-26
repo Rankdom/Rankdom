@@ -82,7 +82,7 @@ function App() {
 
         <footer className="footer">
           <div className="container">
-            <p>&copy; 2024 Rankdom. Vi har ikke nogen rettigheder xD.</p>
+            <p>&copy; 2024 Rankdom.</p>
           </div>
         </footer>
       </div>

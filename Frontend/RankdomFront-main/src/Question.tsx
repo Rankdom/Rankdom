@@ -1,60 +1,25 @@
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
-import { Button } from './components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import './Question.css';
 
 interface VoteBlockProps {
   title: string;
-  imageUrl?: string;
+  imageUrl: string;
+  disabled: boolean;
+  onClick: () => void;
 }
 
 export default function Question({
-  title = "placeholder Title",
+  title = "Sample Title",
   imageUrl = "/placeholder.svg?height=200&width=300",
+  disabled,
+  onClick
 }: VoteBlockProps) {
-  const [upvotes, setUpvotes] = useState(0);
-  const [downvotes, setDownvotes] = useState(0);
-  const [isUpvoted, setIsUpvoted] = useState(false);
-  const [isDownvoted, setIsDownvoted] = useState(false);
-
-  const handleUpvote = () => {
-    if (isUpvoted) {
-      // Remove upvote if already upvoted
-      setUpvotes((prev) => prev - 1);
-      setIsUpvoted(false);
-    } else {
-      //Tilføj Upvote og hvis downvoted fjern downvote.
-      setUpvotes((prev) => prev + 1);
-      if (isDownvoted) {
-        setDownvotes((prev) => prev - 1);
-        setIsDownvoted(false);
-      }
-      setIsUpvoted(true);
-    }
-  };
-
-  const handleDownvote = () => {
-    if (isDownvoted) {
-      // Remove downvote hvis allerede upvoted
-      setDownvotes((prev) => prev - 1);
-      setIsDownvoted(false);
-    } else {
-      // Adder downvote, og hvis upvoted fjern upvote
-      setDownvotes((prev) => prev + 1);
-      if (isUpvoted) {
-        setUpvotes((prev) => prev - 1);
-        setIsUpvoted(false);
-      }
-      setIsDownvoted(true);
-    }
-  };
-
   return (
-    <Card className="vote-block">
+    <Card className={`vote-block ${disabled ? 'disabled' : ''}`} onClick={disabled ? undefined : onClick}>
       <CardHeader className="vote-block-header">
         <CardTitle className="vote-block-title">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="vote-block-content">
+      <CardContent className="vote-block-content relative">
         <div className="vote-block-image">
           <img
             src={imageUrl}
@@ -62,33 +27,14 @@ export default function Question({
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="vote-buttons">
-          <div className="vote-button-container">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleUpvote}
-              aria-label="Upvote"
-              className={`vote-button ${isUpvoted ? 'active' : ''}`}
-            >
-              👍
-            </Button>
-            <span className="vote-count">{upvotes}</span>
+        {disabled && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-5xl">
           </div>
-          <div className="vote-button-container">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleDownvote}
-              aria-label="Downvote"
-              className={`vote-button ${isDownvoted ? 'active' : ''}`}
-            >
-              👎
-            </Button>
-            <span className="vote-count">{downvotes}</span>
-          </div>
-        </div>
+
+        )}
+
       </CardContent>
+
     </Card>
   );
 }
