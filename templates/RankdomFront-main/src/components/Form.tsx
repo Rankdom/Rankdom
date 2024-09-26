@@ -1,9 +1,9 @@
 import {useState} from "react";
-import './Form.css';
+import '../Form.css';
 import {useNavigate} from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN} from "./constants.JS";
-import api from "./api.JS";
-import LoadingIndicator from "./components/loading";
+import { ACCESS_TOKEN, REFRESH_TOKEN} from "../constants.js";
+import api from "../api.js";
+import LoadingIndicator from "./loading";
 import {TurborepoAccessTraceResult} from "next/dist/build/turborepo-access-trace";
 
 function Form({route,name}) {
@@ -23,7 +23,7 @@ function Form({route,name}) {
 
             if(name=="Login"){
                 const  res = await api.post(route,{username,password})
-                if(res=="Success"){
+                if(res.data.message=="Success"){
                     navigate("/")
 
                 }

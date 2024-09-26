@@ -15,4 +15,4 @@ class RankdomAdmin(admin.ModelAdmin):
 # model class and the Admin model class
 # using the register() method
 # of admin.site class
-admin.site.register(Rankdom, User)
+admin.site.register(Rankdom, RankdomAdmin)

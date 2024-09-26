@@ -1,5 +1,5 @@
 import './App.css';
-import './Form.tsx';
+import './components/Form.tsx';
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,7 +15,7 @@ import Jobs from './components/Jobs';
 import Nature from './components/Nature';
 import News from './components/News';
 import History from './components/History';
-import Form from "./Form.tsx";
+import Form from "./components/Form.tsx";
 
 
 

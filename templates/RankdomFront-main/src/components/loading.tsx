@@ -1,4 +1,4 @@
-import './loading.css';
+import '../loading.css';
 
 const LoadingIndicator = () => {
     return <div className="loading-container">
