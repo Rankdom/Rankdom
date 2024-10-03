@@ -1,5 +1,6 @@
 import './App.css';
 import './Register.tsx';
+import './Profile.tsx';
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,7 +17,9 @@ import Nature from './components/Nature';
 import News from './components/News';
 import History from './components/History';
 import Register from "./Register.tsx";
-
+import Profile from "./Profile.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import Login from "./Login.tsx";
 
 
 interface Category {
@@ -46,21 +49,16 @@ function App() {
             <a href="/"><h1>Rankdom</h1></a>
             <nav>
               <ul>
-                <li><a href="/routeGoogle">Login  🥜</a></li>
-                <li><a href="/Register">Register  🥜</a></li>
-
-
-                <li><a href="/Support">Support?</a></li>
-                <li><a href="/PreferedPool">Prefered?</a></li>
+                <li><Link to="/Profile">Your Profile🐒</Link></li>
+                <li><Link to="/LoginPath">LoginPath?</Link></li>
               </ul>
             </nav>
           </div>
         </header>
-
         <main className="main-content">
           <div className="container">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<HomePage/>} />
               {categories.map((category) => (
                 <Route
                   key={category.name}
@@ -73,10 +71,26 @@ function App() {
                   element={<Register name={"Register"}  />}
               />
               <Route
-                  path="/routeGoogle"
-                  element={<Register name={"Login"}  />}
+                  path="/Login"
+                  element={<Login/>}
               />
+              <Route
+                  path="/Profile"
+                  element={<Profile/>}
+              />
+               {/* Protect the /dashboard route */}
+      <Route
+        path="/LoginPath"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+
             </Routes>
+
+
           </div>
         </main>
 
