@@ -5,11 +5,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from rankdom.api.Serializers import userSerializer
+from djangoProject.emailAuthorization import send_mail_page
+
+
 
 class LoginUserView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = userSerializer(data=request.data)
-
         if serializer.is_valid():
             username = serializer.validated_data.get('username')
             password = serializer.validated_data.get('password')
@@ -26,6 +28,7 @@ class LoginUserView(APIView):
 class RegisterUserView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = userSerializer(data=request.data)
+        send_mail_page()
 
         if serializer.is_valid():
             username = serializer.validated_data.get('username')

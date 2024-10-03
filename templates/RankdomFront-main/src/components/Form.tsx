@@ -35,7 +35,7 @@ function Form({route,name}) {
             else{
                  await api.post(route,{username,password,email})
 
-                navigate("/routeGoogle")
+                navigate("/authenticator")
 
             }
         } catch (error) {

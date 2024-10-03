@@ -127,3 +127,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REACT_APP_BUILD_PATH = "/templates/build"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # e.g., 'smtp.gmail.com' for Gmail
+EMAIL_PORT = 587  # or 465 for SSL
+EMAIL_USE_TLS = True  # or EMAIL_USE_SSL = True for SSL
+EMAIL_HOST_USER = 'rankdom7@gmail.com'
+EMAIL_HOST_PASSWORD = 'xuae hhvx bkjf rdld'

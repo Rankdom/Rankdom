@@ -16,6 +16,9 @@ import Nature from './components/Nature';
 import News from './components/News';
 import History from './components/History';
 import Form from "./components/Form.tsx";
+import Authenticator from "./components/authenticator.tsx";
+
+
 
 
 
@@ -26,7 +29,7 @@ interface Category {
   component: React.ComponentType;
 }
 /* Her bruges en : react.Component, vigtigt fordi her bruges en React.FC = () component under hver component.TSX fil :) */
-const categories: Category[] = [
+const categories: ({ component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string })[] = [
   { name: 'Sport', href: '/sport', icon: '🏅', component: Sport },
   { name: 'Movies', href: '/movies', icon: '🎬', component: Movies },
   { name: 'Food', href: '/food', icon: '🍔', component: Food },
@@ -76,6 +79,11 @@ function App() {
                   path="/routeGoogle"
                   element={<Form route="/routeGoogle/" name={"Login"}  />}
               />
+              <Route
+                  path="/authenticator"
+                  element={<Authenticator route="/authenticator/"/>}
+              />
+
             </Routes>
           </div>
         </main>
