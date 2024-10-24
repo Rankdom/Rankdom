@@ -2,32 +2,22 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import HttpResponse
-<<<<<<< HEAD:rankdom/api/views.py
-from rankdom.api.Serializers import UserSerializer,UserRegistration,CustomUser
-from djangoProject.emailAuthorization import send_mail_page,generate_password
-
-
-
-
-=======
 
 from rankdom.api.Serializers import UserSerializer, UserRegistration, CustomUser
 from djangoProject.emailAuthorization import send_mail_page, generate_password
->>>>>>> cdc564660f39877e034ebc74d8f3fb9613371403:Backend/rankdom/api/views.py
+
+from rankdom.api.Serializers import UserSerializer, UserRegistration, CustomUser
+from djangoProject.emailAuthorization import send_mail_page, generate_password
 
 
 class login(APIView):
     def authenticateUserData(self, username, email, code):
-<<<<<<< HEAD:rankdom/api/views.py
+
             send_mail_page(code, email)
             if not UserRegistration.objects.filter(username=username, email=email).exists():
                 UserRegistration.objects.create(username=username, email=email, code=code)
             return Response({"message": "Success."}, status=status.HTTP_200_OK)
-=======
-        send_mail_page(code, email)
-        UserRegistration.objects.create(username=username, email=email, code=code)
-        return Response({"message": "Success."}, status=status.HTTP_200_OK)
->>>>>>> cdc564660f39877e034ebc74d8f3fb9613371403:Backend/rankdom/api/views.py
+
 
     def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
@@ -63,7 +53,6 @@ class Authenticate(APIView):
         return Response({"message": "Invalid data", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
-<<<<<<< HEAD:rankdom/api/views.py
 class getUserInfo(APIView):
     def getInfo(self, code):
         if UserRegistration.objects.filter(code=code).exists():
@@ -81,8 +70,5 @@ class getUserInfo(APIView):
 
 
 
-
-=======
->>>>>>> cdc564660f39877e034ebc74d8f3fb9613371403:Backend/rankdom/api/views.py
 def home(request):
     return HttpResponse("Hello, world. You're at the polls index.")
