@@ -1,25 +1,28 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import '../Form.css';
-import {useNavigate} from "react-router-dom";
+import {useNavigate,useParams } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN} from "../constants.js";
 import api from "../api.js";
 import LoadingIndicator from "./loading";
 
-function Authenticator({route}) {
+
+
+function Authenticator() {
     const message = "You have now received an authentication code, congratulations. Check your Junk Folder please"
     const [loading ,setLoading] =useState(false)
     const [code ,setCoce] =useState("")
-
-    let requiredEmail=false
-
+    const route="/authenticator/"
     const navigate = useNavigate();
-    if(name=="Register")
-        requiredEmail=true
+
+
+
+
     const handleSubmit =  async (event: React.FormEvent<HTMLFormElement>) => {
         setLoading(true);
         event.preventDefault()
         try {
-
+            await api.post(route,{code})
+            navigate("/")
 
         } catch (error) {
             alert(error)
@@ -27,6 +30,7 @@ function Authenticator({route}) {
             setLoading(false)
         }
     }
+
     return (
         <form method="POST" onSubmit={handleSubmit} className={"form-container"}>
             <h3> {message}</h3>
@@ -35,7 +39,7 @@ function Authenticator({route}) {
                        value={code}
                        onChange={(e) => setCoce(e.target.value)}
                        placeholder={"code"}
-                       required={requiredEmail }
+                       required={true }
                 />
 
 

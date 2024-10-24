@@ -15,9 +15,12 @@ import Jobs from './components/Jobs';
 import Nature from './components/Nature';
 import News from './components/News';
 import History from './components/History';
-import Form from "./components/Form.tsx";
-import Authenticator from "./components/authenticator.tsx";
+import authenticator from './components/authenticator';
 
+import Form from "./components/Form.tsx";
+import {createContext, useReducer, useState} from "react";
+import Authenticator from "./components/authenticator";
+import {formContext} from "./userContext";
 
 
 
@@ -41,9 +44,17 @@ const categories: ({ component: React.FC; name: string; icon: string; href: stri
 ];
 
 function App() {
+
+
+
+
+
   return (
+
     <Router>
       <div className="app">
+
+
         <header className="topbar">
           <div className="container">
             <a href="/"><h1>Rankdom</h1></a>
@@ -62,7 +73,10 @@ function App() {
 
         <main className="main-content">
           <div className="container">
+            <formContext.Provider >
+
             <Routes>
+
               <Route path="/" element={<HomePage />} />
               {categories.map((category) => (
                 <Route
@@ -75,16 +89,15 @@ function App() {
                   path="/Register"
                   element={<Form route="/Register/" name={"Register"}  />}
               />
-              <Route
-                  path="/routeGoogle"
-                  element={<Form route="/routeGoogle/" name={"Login"}  />}
-              />
+
               <Route
                   path="/authenticator"
-                  element={<Authenticator route="/authenticator/"/>}
+                  element={<Authenticator route="/authenticator/" name={"authenticator"} />}
               />
 
             </Routes>
+            </formContext.Provider>
+
           </div>
         </main>
 
