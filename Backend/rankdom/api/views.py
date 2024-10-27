@@ -2,20 +2,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import HttpResponse
-
-from rankdom.api.Serializers import UserSerializer, UserRegistration, CustomUser
-from djangoProject.emailAuthorization import send_mail_page, generate_password
-
-from rankdom.api.Serializers import UserSerializer, UserRegistration, CustomUser
-from djangoProject.emailAuthorization import send_mail_page, generate_password
+from Serializers import UserSerializer, UserRegistration, CustomUser
+from emailAuthorization import send_mail_page, generate_password
 
 
 class login(APIView):
     def authenticateUserData(self, username, email, code):
-
             send_mail_page(code, email)
             if not UserRegistration.objects.filter(username=username, email=email).exists():
                 UserRegistration.objects.create(username=username, email=email, code=code)
+
             return Response({"message": "Success."}, status=status.HTTP_200_OK)
 
 
@@ -34,10 +30,15 @@ class Authenticate(APIView):
     def authenticateEmailCode(self, provided_code, saved_code, registration_data):
         if saved_code == provided_code:
             CustomUser.objects.create(username=registration_data.username, email=registration_data.email)
-            UserRegistration.objects.all().delete()
             return Response({"message": "Success."}, status=status.HTTP_200_OK)
         else:
-            return Response({"message": "Invalid code."}, status=status.HTTP_400_BAD_REQUEST)
+            user = CustomUser.objects.get(username=registration_data.username)
+            user.code= saved_code
+
+
+        UserRegistration.objects.all().delete()
+
+        return Response({"message": "Invalid code."}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
