@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ACCESS_TOKEN } from "./constants.js";
+import { ACCESS_TOKEN } from "./constants.tsx";
 /*
 this for storing tokesn in local storage
  */

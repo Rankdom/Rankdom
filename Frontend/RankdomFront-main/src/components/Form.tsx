@@ -1,8 +1,8 @@
 import {createContext, useContext, useReducer, useState} from "react";
 import '../Form.css';
 import {useNavigate} from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN} from "../constants.js";
-import api from "../api.js";
+import { ACCESS_TOKEN, REFRESH_TOKEN} from "../constants.tsx";
+import api from "../api.tsx";
 import LoadingIndicator from "./loading";
 import Authenticator from "./authenticator";
 

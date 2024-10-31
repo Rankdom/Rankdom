@@ -1,27 +1,31 @@
-import {useContext, useState} from "react";
+import {useState} from "react";
 import '../Form.css';
-import {useNavigate,useParams } from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN} from "../constants.js";
-import api from "../api.js";
+import {useNavigate} from "react-router-dom";
+
+
 import LoadingIndicator from "./loading";
+import api from "../api.tsx";
 
 
+interface AuthenticatorProps {
+    route?: string,
+    name?: string
+}
 
-function Authenticator() {
+function Authenticator({route}: AuthenticatorProps) {
     const message = "You have now received an authentication code, congratulations. Check your Junk Folder please"
-    const [loading ,setLoading] =useState(false)
-    const [code ,setCoce] =useState("")
-    const route="/authenticator/"
+    const [loading, setLoading] = useState(false)
+    const [code, setCoce] = useState("")
     const navigate = useNavigate();
 
 
-
-
-    const handleSubmit =  async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         setLoading(true);
         event.preventDefault()
         try {
-            await api.post(route,{code})
+            if (typeof route === "string") {
+                await api.post(route, {code})
+            }
             navigate("/")
 
         } catch (error) {
@@ -35,13 +39,12 @@ function Authenticator() {
         <form method="POST" onSubmit={handleSubmit} className={"form-container"}>
             <h3> {message}</h3>
 
-                <input className="form-input" type={"text"}
-                       value={code}
-                       onChange={(e) => setCoce(e.target.value)}
-                       placeholder={"code"}
-                       required={true }
-                />
-
+            <input className="form-input" type={"text"}
+                   value={code}
+                   onChange={(e) => setCoce(e.target.value)}
+                   placeholder={"code"}
+                   required={true}
+            />
 
 
             {loading && <LoadingIndicator/>}

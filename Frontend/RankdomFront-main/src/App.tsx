@@ -7,7 +7,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link, BrowserRouter,
+  Link,
 } from 'react-router-dom';
 
 import Sport from './components/Sport';
@@ -20,21 +20,15 @@ import News from './components/News';
 import History from './components/History';
 
 import Form from "./components/Form.tsx";
-import {createContext, useReducer, useState} from "react";
+
 import Authenticator from "./components/authenticator";
-import {formContext} from "./userContext";
-import Register from "./Register.tsx";
+
 import Profile from "./Profile.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Login from "./Login.tsx";
 
 
-interface Category {
-  name: string;
-  href: string;
-  icon: string;
-  component: React.ComponentType;
-}
+
 /* Her bruges en : react.Component, vigtigt fordi her bruges en React.FC = () component under hver component.TSX fil :) */
 const categories: ({ component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string })[] = [
   { name: 'Sport', href: '/sport', icon: '🏅', component: Sport },
@@ -93,7 +87,6 @@ function App() {
                   path="/authenticator"
                   element={<Authenticator route="/authenticator/" name={"authenticator"} />}
               />
-
 
               <Route
 
