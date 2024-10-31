@@ -17,12 +17,6 @@ router = routers.DefaultRouter()
 router.register(r'tasks',views.RankdomView, 'task')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    # add another path to the url patterns
-    # when you visit the localhost:8000/api
-    # you should be routed to the django Rest framework
-    path('api/', include(router.urls))
 
 
 ]
