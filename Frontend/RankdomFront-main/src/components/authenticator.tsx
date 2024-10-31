@@ -1,7 +1,6 @@
-import {useContext, useState} from "react";
+import { useState} from "react";
 import '../Form.css';
-import {useNavigate,useParams } from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN} from "../constants.js";
+import {useNavigate } from "react-router-dom";
 import api from "../api.js";
 import LoadingIndicator from "./loading";
 
@@ -22,7 +21,9 @@ function Authenticator() {
         event.preventDefault()
         try {
             await api.post(route,{code})
-            navigate("/")
+            const authToken = code ;
+            localStorage.setItem("authToken", authToken);
+                        navigate("/Profile")
 
         } catch (error) {
             alert(error)

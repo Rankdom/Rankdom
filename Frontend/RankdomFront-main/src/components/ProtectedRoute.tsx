@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
 // Simulating an authentication function (you could replace this with your actual logic)
-const isAuthenticated = () => {
+ const isAuthenticated = () => {
   // We need abids token ongo bongo, but it works by simply moving is ! from isAuthenticated atm.
   return localStorage.getItem('authToken') !== null;
 };
