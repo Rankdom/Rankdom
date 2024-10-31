@@ -19,3 +19,7 @@ class RankdomView(viewsets.ModelViewSet):
     # define a variable and populate it 
     # with the Todo list objects
     queryset = Rankdom.objects.all()
+
+
+
+
