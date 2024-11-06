@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 # import the rankdom data model
-from .models import Rankdom, Questionsset
+from .models import  Questionsset
 
 
 # create a serializer class
