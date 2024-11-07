@@ -1,7 +1,7 @@
-from django.urls import path, include
-from django.contrib import admin
+from django.urls import path,include
+from win32comext.axscript.client.framework import profile
 
-from rankdom.api.views import *
+from rankdom.api.views import login,Authenticate,profile,home
 
 from rankdom.api.views import Authenticate, login, home
 from rest_framework import routers
@@ -18,6 +18,7 @@ urlpatterns = [
     path("", home, name="home"),
     path("Register/", login.as_view(), name="login"),
     path("authenticator/", Authenticate.as_view(), name="authenticator"),
+    path("profile/", profile.as_view(), name="authenticator"),
     path("api/", include(apiRouter.urls), name="api"),
     path('admin/', admin.site.urls),
 
