@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import HttpResponse
 
-from rankdom.api.Serializers import UserSerializer, UserRegistration, CustomUser
+from rankdom.api.Serializers import UserSerializer
+from rankdom.models import  UserRegistration, CustomUser
 from djangoProject.emailAuthorization import send_mail_page, generate_password
 
 
@@ -45,6 +46,16 @@ class Authenticate(APIView):
             return self.authenticateEmailCode(provided_code, registration_data.code, registration_data)
 
         return Response({"message": "Invalid data", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+class profile(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            code = serializer.validated_data.get('code')
+            queryset = UserRegistration.objects.filter(code=code)
+            user_data = UserSerializer(queryset, many=True).data
+            return Response(user_data, status=status.HTTP_200_OK)
+
 
 
 def home(request):

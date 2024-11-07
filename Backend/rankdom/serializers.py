@@ -9,4 +9,4 @@ class RankdomSerializer(serializers.ModelSerializer):
     # create a meta class
     class Meta:
         model = Questionsset
-        fields = ('supercategory', 'category', 'description', 'content_array')
+        fields = ('title','supercategory', 'category', 'description','like','dislike', 'content_array')
