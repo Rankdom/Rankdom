@@ -1,5 +1,5 @@
+from django.contrib import admin
 from django.urls import path,include
-from win32comext.axscript.client.framework import profile
 
 from rankdom.api.views import login,Authenticate,profile,home
 

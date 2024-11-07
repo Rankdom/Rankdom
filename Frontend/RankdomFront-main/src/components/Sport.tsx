@@ -23,6 +23,7 @@ interface ApiResponseItem {
   category: string;
   description: string;
   content_array: Player[];
+  emoji :string
 }
 
 const defaultSportsSubcategories: SportCategory[] = [
@@ -60,7 +61,7 @@ const Sport: React.FC = () => {
         const formattedData: SportCategory[] = data.map((item) => ({
           name: item.category,
           href: `/sport/${item.category.toLowerCase()}`,
-          icon: '⚽',
+          icon: item.emoji,
           questions: item.content_array.map((player: Player) => ({
             name: player.name,
             imageUrl: player.image_url,
