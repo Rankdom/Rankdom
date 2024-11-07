@@ -1,40 +1,70 @@
-import React, { useState } from 'react';
-
-
+import React, { useState, useEffect } from 'react';
 import Question from "../Question.tsx";
 
-const sportsSubcategories = [
-  { name: 'Soccer', href: '/sport/soccer', icon: '⚽', questions: [
-    { name: 'Messi', imageUrl: 'https://cdn.britannica.com/35/238335-050-2CB2EB8A/Lionel-Messi-Argentina-Netherlands-World-Cup-Qatar-2022.jpg'  },
-    { name: 'Ronaldo', imageUrl: 'https://editorial.uefa.com/resources/027c-16d30c80a3e5-8717973e3fb0-1000/portugal_v_france_-_uefa_euro_2020_group_f.jpeg' },
-  ] },
-  { name: 'Basketball', href: '/sport/basketball', icon: '🏀', questions: [] },
-  { name: 'Baseball', href: '/sport/baseball', icon: '⚾', questions: [] },
-  { name: 'Tennis', href: '/sport/tennis', icon: '🎾' , questions: [] },
-  { name: 'Cricket', href: '/sport/cricket', icon: '🏏' , questions: [] },
-  { name: 'American Football', href: '/sport/american-football', icon: '🏈' , questions: [] },
-  { name: 'Rugby', href: '/sport/rugby', icon: '🏉' , questions: [] },
-  { name: 'Hockey', href: '/sport/hockey', icon: '🏒' , questions: [] },
-  { name: 'Golf', href: '/sport/golf', icon: '⛳' , questions: [] },
-  { name: 'Boxing', href: '/sport/boxing', icon: '🥊', questions: [] },
-  { name: 'Swimming', href: '/sport/swimming', icon: '🏊' , questions: [] },
-  { name: 'Athletics', href: '/sport/athletics', icon: '🏃' , questions: []},
-  { name: 'Cycling', href: '/sport/cycling', icon: '🚴' , questions: []},
-  { name: 'Martial Arts', href: '/sport/martial-arts', icon: '🥋' , questions: []},
-  { name: 'Esports', href: '/sport/esports', icon: '🎮' , questions: []},
-];
+// Define interfaces for the data structures
+interface QuestionType {
+  name: string;
+  imageUrl: string;
+}
+
+interface SportCategory {
+  name: string;
+  href: string;
+  icon: string;
+  questions: QuestionType[];
+}
+interface Player {
+  name: string;
+  image_url: string;
+}
+
+interface ApiResponseItem {
+  supercategory: string;
+  category: string;
+  description: string;
+  content_array: Player[];
+}
+
 
 const Sport: React.FC = () => {
+  const [sportsSubcategories, setSportsSubcategories] = useState<SportCategory[]>([]);
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
   const [selectedQuestion, setSelectedQuestion] = useState<string | null>(null);
 
+  useEffect(() => {
+  fetch('http://127.0.0.1:8000/api/Questions/')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data: ApiResponseItem[]) => { // Use ApiResponseItem[] instead of any
+      const formattedData: SportCategory[] = data.map((item) => ({
+        name: item.category,
+        href: `/sport/${item.category.toLowerCase()}`,
+        icon: '⚽', // Default icon, modify as needed
+        questions: item.content_array.map((player: Player) => ({ // Use Player instead of any
+          name: player.name,
+          imageUrl: player.image_url
+        }))
+      }));
+
+      setSportsSubcategories(formattedData);
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+    });
+}, []);
+
+
   const handleSportClick = (sportName: string) => {
-    setSelectedSport(sportName); // Set sport
-    setSelectedQuestion(null); // Reset question ud fra sport.
+    setSelectedSport(sportName);
+    setSelectedQuestion(null);
   };
 
   const handleQuestionSelect = (questionName: string) => {
-    setSelectedQuestion(questionName); // Set the selected card-question opponent.
+    setSelectedQuestion(questionName);
   };
 
   const currentSport = sportsSubcategories.find((sport) => sport.name === selectedSport);
@@ -65,12 +95,12 @@ const Sport: React.FC = () => {
                   <Question
                     title={question.name}
                     imageUrl={question.imageUrl}
-                    disabled={!!selectedQuestion && selectedQuestion !== question.name} // Boolean går igang og deaktivere andet kort.
+                    disabled={!!selectedQuestion && selectedQuestion !== question.name}
                     onClick={() => handleQuestionSelect(question.name)}
                   />
                   {selectedQuestion && selectedQuestion !== question.name && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-5xl">
-
+                      {/* Overlay */}
                     </div>
                   )}
                 </div>
