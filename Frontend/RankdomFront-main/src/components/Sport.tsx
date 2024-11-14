@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Question from "../Question.tsx";
 import { useNavigate } from "react-router-dom";
+import "./Sport.css";
 
 interface QuestionType {
   name: string;
@@ -96,7 +97,10 @@ const Sport: React.FC = () => {
   };
 
   const goToScorePage = () => {
-    navigate('/score', { state: { selectedChoices } });
+  console.log(selectedChoices)
+  console.log(selectedSport)
+    navigate('/score', { state: { selectedChoices, selectedSport } });
+
   };
 
   const currentSport = sportsSubcategories.find((sport) => sport.name === selectedSport);
@@ -138,11 +142,12 @@ const Sport: React.FC = () => {
               ))}
             </div>
           ) : pairCount >= 10 ? (
-            <button onClick={goToScorePage}>Proceed to Score</button>
+              <button className="proceed-to-score-button" onClick={goToScorePage}>
+                Proceed to Score
+              </button>
           ) : (
-            <p>No Questions available for {selectedSport}</p>
+              <p>No Questions available for {selectedSport}</p>
           )}
-          <button onClick={() => setSelectedSport(null)}>Back</button>
         </div>
       )}
     </div>
