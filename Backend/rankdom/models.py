@@ -37,6 +37,7 @@ class Answer(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 
 
+
     def __str__(self):
         # it will return the title
         return self.supercategory

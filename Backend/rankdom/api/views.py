@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 from rest_framework import viewsets
 
-from rankdom.api.Serializers import UserSerializer
+from rankdom.serializers import UserSerializer
 from rankdom.models import UserRegistration, CustomUser
 from djangoProject.emailAuthorization import send_mail_page, generate_password
 
@@ -36,23 +36,21 @@ class Authenticate(APIView):
         else:
             return Response({"message": "Invalid code."}, status=status.HTTP_400_BAD_REQUEST)
 
-def post(self, request, *args, **kwargs):
-    serializer = UserSerializer(data=request.data)
-    if serializer.is_valid():
-        provided_code = serializer.validated_data.get('code')
-        try:
-            registration_data = UserRegistration.objects.get(code=provided_code)
-        except UserRegistration.DoesNotExist:
-            return Response({"message": "Invalid data", "errors": serializer.errors},
-                            status=status.HTTP_400_BAD_REQUEST)
-        return self.authenticateEmailCode(provided_code, registration_data.code, registration_data)
+    def post(self, request, *args, **kwargs):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            provided_code = serializer.validated_data.get('code')
+            try:
+                registration_data = UserRegistration.objects.get(code=provided_code)
+            except UserRegistration.DoesNotExist:
+                return Response({"message": "Invalid data", "errors": serializer.errors},
+                                status=status.HTTP_400_BAD_REQUEST)
+            return self.authenticateEmailCode(provided_code, registration_data.code, registration_data)
 
-    return Response({"message": "Invalid data", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "Invalid data", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CustomUser(viewsets.ModelViewSet):
-    serializer_class = UserSerializer
-    queryset = CustomUser.objects.all()
+
 
 
 
