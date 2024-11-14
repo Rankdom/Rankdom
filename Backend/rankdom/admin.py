@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .api.views import CustomUser
 # import the model Rankdom
-from .models import  Questionsset, CustomUser
+from .models import  Questionsset, CustomUser , Answer
 
 
 # create a class for the admin-model integration
@@ -22,3 +22,8 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CustomUser, UserAdmin)
+
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ("supercategory", "category", "description","content_array")
+
+admin.site.register(Answer, AnswerAdmin)

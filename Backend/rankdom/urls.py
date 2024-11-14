@@ -17,6 +17,7 @@ apiRouter = routers.DefaultRouter()
 # register the router
 apiRouter.register(r'Questions', views.RankdomView, 'Question')
 apiRouter.register(r'Users',CustomUser ,'Users')
+apiRouter.register(r'Answer', views.AnswerView, 'Answer')
 
 urlpatterns = [
     path("", home, name="home"),
