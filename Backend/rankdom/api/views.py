@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import HttpResponse
 
-from rest_framework import viewsets
 
 from rankdom.serializers import UserSerializer
 from rankdom.models import UserRegistration, CustomUser
@@ -30,7 +29,12 @@ class login(APIView):
 class Authenticate(APIView):
     def authenticateEmailCode(self, provided_code, saved_code, registration_data):
         if saved_code == provided_code:
-            CustomUser.objects.create(username=registration_data.username, email=registration_data.email)
+            if(CustomUser.objects.get(code=provided_code).exists()):
+                data = CustomUser.objects.get(code=provided_code).exists()
+                data.code = saved_code
+            else:
+                CustomUser.objects.create(username=registration_data.username, email=registration_data.email)
+
             UserRegistration.objects.all().delete()
             return Response({"message": "Success."}, status=status.HTTP_200_OK)
         else:
