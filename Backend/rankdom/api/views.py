@@ -16,15 +16,15 @@ class login(APIView):
         UserRegistration.objects.create(username=username, email=email, code=code)
         return Response({"message": "Success."}, status=status.HTTP_200_OK)
 
-def post(self, request, *args, **kwargs):
-    serializer = UserSerializer(data=request.data)
-    if serializer.is_valid():
-        username = serializer.validated_data.get('username')
-        email = serializer.validated_data.get('email')
-        code = generate_password()
-        return self.authenticateUserData(username, email, code)
+    def post(self, request, *args, **kwargs):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data.get('username')
+            email = serializer.validated_data.get('email')
+            code = generate_password()
+            return self.authenticateUserData(username, email, code)
 
-    return Response({"message": "Invalid data", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "Invalid data", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class Authenticate(APIView):
