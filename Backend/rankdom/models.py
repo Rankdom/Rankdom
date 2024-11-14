@@ -22,7 +22,7 @@ class Questionsset(models.Model):
     create_date = models.DateTimeField(default=datetime.datetime.now())
     content_array = models.JSONField(max_length=400)
     emoji = models.CharField(max_length=150)
-    user  = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    user  = models.EmailField(null=True)
 
 class Answer(models.Model):
     title = models.CharField(max_length=150)
@@ -34,7 +34,7 @@ class Answer(models.Model):
     create_date = models.DateTimeField(default=datetime.datetime.now())
     content_array = models.JSONField(max_length=400)
     emoji = models.CharField(max_length=150)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    user = models.EmailField(null=True)
 
 
 
