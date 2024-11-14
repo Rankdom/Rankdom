@@ -15,6 +15,7 @@ class Questionsset(models.Model):
     dislike = models.IntegerField(default=0)
     create_date = models.DateTimeField(default=datetime.datetime.now())
     content_array = models.JSONField(max_length=400)
+    emoji = models.CharField(max_length=150)
 
     def __str__(self):
         # it will return the title
