@@ -7,7 +7,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link, BrowserRouter,
+  Link,
 } from 'react-router-dom';
 
 import Sport from './components/Sport';
