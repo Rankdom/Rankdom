@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Question from "../Question.tsx";
+import { useNavigate } from "react-router-dom";
 
 interface QuestionType {
   name: string;
@@ -36,6 +37,8 @@ const Sport: React.FC = () => {
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
   const [currentQuestions, setCurrentQuestions] = useState<QuestionType[]>([]);
   const [selectedChoices, setSelectedChoices] = useState<string[]>([]);
+  const [pairCount, setPairCount] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/Questions/')
@@ -70,6 +73,8 @@ const Sport: React.FC = () => {
 
   const handleSportClick = (sportName: string) => {
     setSelectedSport(sportName);
+    setPairCount(0);
+    setSelectedChoices([]);
     loadRandomQuestions(sportName);
   };
 
@@ -83,7 +88,15 @@ const Sport: React.FC = () => {
 
   const handleQuestionSelect = (questionName: string) => {
     setSelectedChoices((prevChoices) => [...prevChoices, questionName]);
-    loadRandomQuestions(selectedSport!);  // Load new random questions after selecting a player
+    setPairCount((prevCount) => prevCount + 1);
+
+    if (pairCount + 1 < 10) {
+      loadRandomQuestions(selectedSport!);  // Load new random questions if less than 10 pairs have been selected
+    }
+  };
+
+  const goToScorePage = () => {
+    navigate('/score', { state: { selectedChoices } });
   };
 
   const currentSport = sportsSubcategories.find((sport) => sport.name === selectedSport);
@@ -111,19 +124,21 @@ const Sport: React.FC = () => {
       ) : (
         <div>
           <h3>Which one do you prefer?</h3>
-          {currentQuestions.length > 0 ? (
+          {currentQuestions.length > 0 && pairCount < 10 ? (
             <div className="category-grid">
               {currentQuestions.map((question) => (
                 <div key={question.name} className="relative">
                   <Question
                     title={question.name}
                     imageUrl={question.imageUrl}
-                    disabled={false} // Make sure both questions are always clickable
+                    disabled={false}
                     onClick={() => handleQuestionSelect(question.name)}
                   />
                 </div>
               ))}
             </div>
+          ) : pairCount >= 10 ? (
+            <button onClick={goToScorePage}>Proceed to Score</button>
           ) : (
             <p>No Questions available for {selectedSport}</p>
           )}
