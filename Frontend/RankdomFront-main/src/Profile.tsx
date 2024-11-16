@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './Profile.css';
 
 function Profile() {
@@ -6,6 +6,29 @@ function Profile() {
   const [isEditingName, setIsEditingName] = useState(false);
   const [profilePic, setProfilePic] = useState('placeholderpic.png?height=96&width=96');
 
+
+/*
+    useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/Users/')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data: ApiResponseItem[]) => {
+        const formattedData: SportCategory[] = data.map((item) => ({
+          name: item.category,
+          href: `/sport/${item.category.toLowerCase()}`,
+          icon: item.emoji,
+          questions: item.content_array.map((player: Player) => ({
+            name: player.name,
+            imageUrl: player.image_url,
+          })),
+        }));S
+
+
+ */
   // Create a ref for the file input element
   const fileInputRef = useRef<HTMLInputElement>(null);
 

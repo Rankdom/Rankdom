@@ -1,20 +1,34 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import './Form.css';
+import api from "./api";
+import LoadingIndicator from "./components/loading.tsx";
+
 
 function Login() {
-    const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+     const [email, setEmail] = useState("");
+     const route = "Login/"
+     const [loading ,setLoading] =useState(false)
+
+
+ const navigate = useNavigate();
+    const handleSubmit =  async (event: React.FormEvent<HTMLFormElement>) => {
+        setLoading(true);
+        event.preventDefault()
         try {
-            // Handle login logic here
+
+                await api.post(route,{email})
+
+                navigate("/authenticator/")
+
         } catch (error) {
-            alert(error);
+            alert(error)
+        } finally {
+            setLoading(false)
         }
-    };
+    }
 
     return (
         <form onSubmit={handleSubmit} className="form-container">
@@ -22,17 +36,12 @@ function Login() {
             <input
                 className="form-input"
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="username"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="email"
             />
-            <input
-                className="form-input"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="password"
-            />
+
+             {loading && <LoadingIndicator/>}
             <button className="form-button" type="submit">Login</button>
             {/* Link to Register page */}
             <p>Don't have an account? <Link to="/Register">Register here</Link></p>

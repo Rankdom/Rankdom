@@ -7,6 +7,7 @@ import LoadingIndicator from "./loading";
 
 
 function Form({route,name}) {
+    route="Register/"
     const [email,setEmail] =useState("")
     const [username,setUsername] =useState("")
     const [loading ,setLoading] =useState(false)

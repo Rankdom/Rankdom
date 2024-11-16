@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path,include
 
 
-from rankdom.api.views import Authenticate, login, home,CustomUser
+from rankdom.api.views import Authenticate, register, home,CustomUser,login
 from rest_framework import routers
 
 from rankdom import views
@@ -21,7 +21,8 @@ apiRouter.register(r'Answer', views.AnswerView, 'Answer')
 
 urlpatterns = [
     path("", home, name="home"),
-    path("Register/", login.as_view(), name="login"),
+    path("Register/", register.as_view(), name="register"),
+    path("Login/", login.as_view(), name="login"),
     path("authenticator/", Authenticate.as_view(), name="authenticator"),
     path("api/", include(apiRouter.urls), name="api"),
     path('admin/', admin.site.urls),

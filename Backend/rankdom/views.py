@@ -24,4 +24,5 @@ class AnswerView(viewsets.ModelViewSet):
 
 class CustomUser(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    queryset = CustomUser.objects.all()
+
+    queryset = CustomUser.objects
