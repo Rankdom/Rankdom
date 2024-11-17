@@ -1,34 +1,35 @@
 import React, {useState, useRef, useEffect} from 'react';
 import './Profile.css';
+import api from "./api";
 
 function Profile() {
   const [name, setName] = useState('Input Username here');
   const [isEditingName, setIsEditingName] = useState(false);
   const [profilePic, setProfilePic] = useState('placeholderpic.png?height=96&width=96');
+  const route = "GetProfile/"
+  const code = localStorage.getItem('authToken')
 
 
-/*
-    useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/Users/')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data: ApiResponseItem[]) => {
-        const formattedData: SportCategory[] = data.map((item) => ({
-          name: item.category,
-          href: `/sport/${item.category.toLowerCase()}`,
-          icon: item.emoji,
-          questions: item.content_array.map((player: Player) => ({
-            name: player.name,
-            imageUrl: player.image_url,
-          })),
-        }));S
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await api.post(route, { code });
+      console.log(response.data)
+      setName(response.data.username)
+      console.log(name)
+      const base64Image = `data:image/jpeg;base64,${response.data.image}`;
+      console.log(base64Image)
+      setProfilePic(base64Image);
+    } catch (error) {
+      alert(error.message || 'An error occurred');
+    }
+  };
+
+  fetchData();
+}, []);
 
 
- */
   // Create a ref for the file input element
   const fileInputRef = useRef<HTMLInputElement>(null);
 

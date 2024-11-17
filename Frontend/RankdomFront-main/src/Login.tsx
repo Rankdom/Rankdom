@@ -39,6 +39,8 @@ function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="email"
+                autoFocus
+
             />
 
              {loading && <LoadingIndicator/>}

@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import HttpResponse
+import base64
 
 
 from rankdom.serializers import UserSerializer
@@ -86,14 +87,15 @@ class getProfileInfo(APIView):
         if serializer.is_valid():
             code = serializer.validated_data.get('code')
             try:
-                data = CustomUser.objects.get(code=code)
-                arr=[]
-                arr.append(data.username)
-                arr.append(data.image.url)
+                user = CustomUser.objects.get(code=code)
+                with open(user.image.path, 'rb') as img_file:
+                    image_binary = img_file.read()
+                    image_base64 = base64.b64encode(image_binary).decode('utf-8')
 
-
-                return Response({"message": arr}, status=status.HTTP_200_OK)
-
+                return Response({
+                    "username": user.username,
+                    "image": image_base64
+                }, status=status.HTTP_200_OK)
 
             except UserRegistration.DoesNotExist:
                 return Response({"message": "Invalid data", "errors": serializer.errors},
