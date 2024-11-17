@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Question from "../Question.tsx";
 import { useNavigate } from "react-router-dom";
 import "./Sport.css";
+import "./Score.tsx"
 
 interface QuestionType {
   name: string;
@@ -100,6 +101,7 @@ const Sport: React.FC = () => {
   console.log(selectedChoices)
   console.log(selectedSport)
     navigate('/score', { state: { selectedChoices, selectedSport } });
+
 
   };
 
