@@ -46,7 +46,7 @@ const useCategoryLogic = (categories: Category[]) => {
       loadRandomQuestions(selectedCategory!);
     }
   };
-
+ //Works Now Score takes input and can be better reflected for all categories.(of course based on category selected)
   const goToScorePage = () => {
     console.log('Navigating to Score Page with:', { selectedChoices, selectedCategory });
     navigate('/score', { state: { selectedChoices, selectedCategory } });
@@ -64,4 +64,4 @@ const useCategoryLogic = (categories: Category[]) => {
   };
 };
 
-export default useCategoryLogic;
+export default useCatego
