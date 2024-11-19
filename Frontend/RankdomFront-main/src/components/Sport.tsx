@@ -1,33 +1,22 @@
 import React from 'react';
 import CategoryGrid from './CategoryGrid.tsx';
 import QuestionDisplay from './QuestionDisplay.tsx';
-import './Sport.css';
 import useFetchCategories from './useFetchCategories.tsx';
 import useCategoryLogic from './useCategoryLogic.tsx';
+import './Score.css';
 
-interface QuestionType {
-  name: string;
-  imageUrl: string;
-}
-
-interface SportCategory {
-  name: string;
-  href: string;
-  icon: string;
-  questions: QuestionType[];
-}
-
-const defaultSportsSubcategories: SportCategory[] = [
+const defaultSportsCategories = [
   { name: 'Soccer', href: '/sport/soccer', icon: '⚽', questions: [] },
   { name: 'Basketball', href: '/sport/basketball', icon: '🏀', questions: [] },
 ];
 
 const Sport: React.FC = () => {
-  const { categories: sportsSubcategories, loading, error } = useFetchCategories(
+  const { categories: sportsCategories, loading, error } = useFetchCategories(
     'sport',
-    defaultSportsSubcategories
+    defaultSportsCategories
   );
 
+  //  logic hook to manage selected category, current questions
   const {
     selectedCategory: selectedSport,
     currentQuestions,
@@ -35,7 +24,7 @@ const Sport: React.FC = () => {
     handleCategoryClick,
     handleQuestionSelect,
     goToScorePage,
-  } = useCategoryLogic(sportsSubcategories);
+  } = useCategoryLogic(sportsCategories);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -45,7 +34,7 @@ const Sport: React.FC = () => {
       {!selectedSport ? (
         <CategoryGrid
           title="Choose a Sport"
-          categories={sportsSubcategories}
+          categories={sportsCategories}
           onCategoryClick={handleCategoryClick}
         />
       ) : (

@@ -3,6 +3,7 @@ import CategoryGrid from './CategoryGrid.tsx';
 import QuestionDisplay from './QuestionDisplay.tsx';
 import useFetchCategories from './useFetchCategories.tsx';
 import useCategoryLogic from './useCategoryLogic.tsx';
+import './Score.css';
 
 const defaultMovieCategories = [
   { name: 'Action', href: '/movies/action', icon: '🎬', questions: [] },

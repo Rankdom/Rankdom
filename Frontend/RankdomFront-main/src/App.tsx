@@ -12,16 +12,11 @@ import {
 
 import Sport from './components/Sport';
 import Movies from './components/Movies';
-import Food from './components/Food';
 import Politics from './components/Politics';
-import Jobs from './components/Jobs';
 import Nature from './components/Nature';
-import News from './components/News';
 import History from './components/History';
-
 import Form from "./components/Form.tsx";
 import Authenticator from "./components/authenticator";
-import Register from "./Register.tsx";
 import Profile from "./Profile.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Login from "./Login.tsx";
@@ -37,11 +32,8 @@ interface Category {
 const categories: Category[] = [
   { name: 'Sport', href: '/sport', icon: '🏅', component: Sport },
   { name: 'Movies', href: '/movies', icon: '🎬', component: Movies },
-  { name: 'Food', href: '/food', icon: '🍔', component: Food },
   { name: 'Politics', href: '/politics', icon: '🏛️', component: Politics },
-  { name: 'Jobs', href: '/jobs', icon: '💼', component: Jobs },
   { name: 'Nature', href: '/nature', icon: '🌿', component: Nature },
-  { name: 'News', href: '/news', icon: '📰', component: News },
   { name: 'History', href: '/history', icon: '🏺', component: History },
 ];
 

@@ -14,6 +14,7 @@ interface Category {
 }
 
 const useCategoryLogic = (categories: Category[]) => {
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentQuestions, setCurrentQuestions] = useState<QuestionType[]>([]);
   const [selectedChoices, setSelectedChoices] = useState<string[]>([]);
@@ -52,6 +53,7 @@ const useCategoryLogic = (categories: Category[]) => {
   };
 
   return {
+
     selectedCategory,
     currentQuestions,
     selectedChoices,
