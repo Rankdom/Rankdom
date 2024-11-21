@@ -4,22 +4,12 @@ import {useNavigate} from "react-router-dom";
 import api from "../api.js";
 import LoadingIndicator from "./loading";
 
-
-
 function Form({route,name}) {
     route="Register/"
     const [email,setEmail] =useState("")
     const [username,setUsername] =useState("")
     const [loading ,setLoading] =useState(false)
     let requiredEmail=false
-
-
-
-
-
-
-
-
 
     const navigate = useNavigate();
         requiredEmail=true

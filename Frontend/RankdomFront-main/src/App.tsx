@@ -25,6 +25,8 @@ import Register from "./Register.tsx";
 import Profile from "./Profile.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Login from "./Login.tsx";
+import Score from './components/Score.tsx'; // Import the Score component
+
 
 interface Category {
   name: string;
@@ -81,10 +83,23 @@ function App() {
                 path="/Login"
                 element={<Login />}
               />
-
-              {/* Protect the /dashboard route */}
-
               <Route
+                path="/Profile"
+                element={<Profile />}
+              />
+              {/* Protect the /dashboard route */}
+              <Route
+                path="/Profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/score"
+                element={<Score />} // Add the Score route
+              />
                 path="/Profile"
                 element={
                   <ProtectedRoute>

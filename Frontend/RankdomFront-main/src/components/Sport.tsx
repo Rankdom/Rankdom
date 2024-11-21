@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Question from "../Question.tsx";
+import { useNavigate } from "react-router-dom";
+import "./Sport.css";
+import "./Score.tsx"
 
 interface QuestionType {
   name: string;
@@ -23,31 +26,21 @@ interface ApiResponseItem {
   category: string;
   description: string;
   content_array: Player[];
-  emoji :string
+  emoji: string;
 }
 
 const defaultSportsSubcategories: SportCategory[] = [
   { name: 'Soccer', href: '/sport/soccer', icon: '⚽', questions: [] },
   { name: 'Basketball', href: '/sport/basketball', icon: '🏀', questions: [] },
-  { name: 'Baseball', href: '/sport/baseball', icon: '⚾', questions: [] },
-  { name: 'Tennis', href: '/sport/tennis', icon: '🎾', questions: [] },
-  { name: 'Cricket', href: '/sport/cricket', icon: '🏏', questions: [] },
-  { name: 'American Football', href: '/sport/american-football', icon: '🏈', questions: [] },
-  { name: 'Rugby', href: '/sport/rugby', icon: '🏉', questions: [] },
-  { name: 'Hockey', href: '/sport/hockey', icon: '🏒', questions: [] },
-  { name: 'Golf', href: '/sport/golf', icon: '⛳', questions: [] },
-  { name: 'Boxing', href: '/sport/boxing', icon: '🥊', questions: [] },
-  { name: 'Swimming', href: '/sport/swimming', icon: '🏊', questions: [] },
-  { name: 'Athletics', href: '/sport/athletics', icon: '🏃', questions: [] },
-  { name: 'Cycling', href: '/sport/cycling', icon: '🚴', questions: [] },
-  { name: 'Martial Arts', href: '/sport/martial-arts', icon: '🥋', questions: [] },
-  { name: 'Esports', href: '/sport/esports', icon: '🎮', questions: [] },
 ];
 
 const Sport: React.FC = () => {
   const [sportsSubcategories, setSportsSubcategories] = useState<SportCategory[]>(defaultSportsSubcategories);
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
-  const [selectedQuestion, setSelectedQuestion] = useState<string | null>(null);
+  const [currentQuestions, setCurrentQuestions] = useState<QuestionType[]>([]);
+  const [selectedChoices, setSelectedChoices] = useState<string[]>([]);
+  const [pairCount, setPairCount] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/Questions/')
@@ -68,7 +61,6 @@ const Sport: React.FC = () => {
           })),
         }));
 
-        // Update sports subcategories, merging with default array
         const updatedSports = defaultSportsSubcategories.map((defaultSport) => {
           const apiSport = formattedData.find((sport) => sport.name === defaultSport.name);
           return apiSport ? apiSport : defaultSport;
@@ -83,11 +75,34 @@ const Sport: React.FC = () => {
 
   const handleSportClick = (sportName: string) => {
     setSelectedSport(sportName);
-    setSelectedQuestion(null);
+    setPairCount(0);
+    setSelectedChoices([]);
+    loadRandomQuestions(sportName);
+  };
+
+  const loadRandomQuestions = (sportName: string) => {
+    const sport = sportsSubcategories.find((sport) => sport.name === sportName);
+    if (sport && sport.questions.length >= 2) {
+      const randomQuestions = [...sport.questions].sort(() => 0.5 - Math.random()).slice(0, 2);
+      setCurrentQuestions(randomQuestions);
+    }
   };
 
   const handleQuestionSelect = (questionName: string) => {
-    setSelectedQuestion(questionName);
+    setSelectedChoices((prevChoices) => [...prevChoices, questionName]);
+    setPairCount((prevCount) => prevCount + 1);
+
+    if (pairCount + 1 < 10) {
+      loadRandomQuestions(selectedSport!);  // Load new random questions if less than 10 pairs have been selected
+    }
+  };
+
+  const goToScorePage = () => {
+  console.log(selectedChoices)
+  console.log(selectedSport)
+    navigate('/score', { state: { selectedChoices, selectedSport } });
+
+
   };
 
   const currentSport = sportsSubcategories.find((sport) => sport.name === selectedSport);
@@ -100,7 +115,7 @@ const Sport: React.FC = () => {
           {sportsSubcategories.map((subcategory) => (
             <a
               key={subcategory.name}
-              href={subcategory.href} // Route link for each sport
+              href={subcategory.href}
               className="category-button"
               onClick={(e) => {
                 e.preventDefault();
@@ -114,29 +129,27 @@ const Sport: React.FC = () => {
         </div>
       ) : (
         <div>
-          <h3> Which one do you prefer?</h3>
-          {currentSport && currentSport.questions.length > 0 ? (
+          <h3>Which one do you prefer?</h3>
+          {currentQuestions.length > 0 && pairCount < 10 ? (
             <div className="category-grid">
-              {currentSport.questions.map((question) => (
+              {currentQuestions.map((question) => (
                 <div key={question.name} className="relative">
                   <Question
                     title={question.name}
                     imageUrl={question.imageUrl}
-                    disabled={!!selectedQuestion && selectedQuestion !== question.name}
+                    disabled={false}
                     onClick={() => handleQuestionSelect(question.name)}
                   />
-                  {selectedQuestion && selectedQuestion !== question.name && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-5xl">
-                      {/* Overlay */}
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
+          ) : pairCount >= 10 ? (
+              <button className="proceed-to-score-button" onClick={goToScorePage}>
+                Proceed to Score
+              </button>
           ) : (
-            <p>No Questions available for {selectedSport}</p>
+              <p>No Questions available for {selectedSport}</p>
           )}
-          <button onClick={() => setSelectedSport(null)}>Back</button>
         </div>
       )}
     </div>
