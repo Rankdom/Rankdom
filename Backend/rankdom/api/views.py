@@ -131,7 +131,7 @@ class setProfileInfo(APIView):
             code = serializer.validated_data.get('code')
             username = serializer.validated_data.get('username')
             image_base64 = serializer.validated_data.get('image')
-            image_url = serializer.validated_data.get('image_url')
+            image_name = serializer.validated_data.get('image_name')
 
             try:
                 user = CustomUser.objects.get(code=code)
@@ -144,12 +144,12 @@ class setProfileInfo(APIView):
                             image_data = base64.b64decode(image_base64)
                         else:
                             image_data = image_base64.read()
-                        print(image_url)
-                        file_path = os.path.join(settings.MEDIA_ROOT, image_url)
+                        print(image_name)
+                        file_path = os.path.join(settings.MEDIA_ROOT, image_name)
 
                         # Create a new unique file name using UUID
                         if os.path.exists(file_path):
-                            user.image.name = image_url
+                            user.image.name = image_name
 
                         else:
 
@@ -157,7 +157,7 @@ class setProfileInfo(APIView):
                             image_file = InMemoryUploadedFile(
                                 BytesIO(image_data),
                                 field_name=None,
-                                name=image_url,
+                                name=image_name,
                                 content_type="image/jpeg",  # Change this dynamically if needed
                                 size=len(image_data),
                                 charset=None,

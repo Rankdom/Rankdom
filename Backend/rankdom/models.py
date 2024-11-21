@@ -10,7 +10,7 @@ class CustomUser(models.Model):
     email = models.EmailField(null=True, blank=True)
     code = models.CharField(max_length=128, blank=True, null=False)
     image = models.ImageField(blank=False, null=False,default='default.png')
-    image_url = models.CharField(max_length=150,blank=False, null=False)
+    image_name = models.CharField(max_length=150,blank=True, null=True)
 
 
 
