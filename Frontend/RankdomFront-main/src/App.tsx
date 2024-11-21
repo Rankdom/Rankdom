@@ -7,7 +7,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link, BrowserRouter,
+  Link,
 } from 'react-router-dom';
 
 import Sport from './components/Sport';
@@ -20,14 +20,11 @@ import News from './components/News';
 import History from './components/History';
 
 import Form from "./components/Form.tsx";
-import {createContext, useReducer, useState} from "react";
 import Authenticator from "./components/authenticator";
-import {formContext} from "./userContext";
 import Register from "./Register.tsx";
 import Profile from "./Profile.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Login from "./Login.tsx";
-
 
 interface Category {
   name: string;
@@ -35,8 +32,8 @@ interface Category {
   icon: string;
   component: React.ComponentType;
 }
-/* Her bruges en : react.Component, vigtigt fordi her bruges en React.FC = () component under hver component.TSX fil :) */
-const categories: ({ component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string } | { component: React.FC; name: string; icon: string; href: string })[] = [
+
+const categories: Category[] = [
   { name: 'Sport', href: '/sport', icon: '🏅', component: Sport },
   { name: 'Movies', href: '/movies', icon: '🎬', component: Movies },
   { name: 'Food', href: '/food', icon: '🍔', component: Food },
@@ -48,34 +45,23 @@ const categories: ({ component: React.FC; name: string; icon: string; href: stri
 ];
 
 function App() {
-
-
-
-
-
   return (
-
     <Router>
       <div className="app">
-
-
         <header className="topbar">
           <div className="container">
             <a href="/"><h1>Rankdom</h1></a>
             <nav>
               <ul>
-                <li><Link to="/Profile">Your Profile🐒</Link></li>
-                <li><Link to="/LoginPath">LoginPath?</Link></li>
+                <li><Link to="/Profile">Account</Link></li>
               </ul>
             </nav>
           </div>
         </header>
         <main className="main-content">
           <div className="container">
-
             <Routes>
-
-              <Route path="/" element={<HomePage/>} />
+              <Route path="/" element={<HomePage />} />
               {categories.map((category) => (
                 <Route
                   key={category.name}
@@ -84,39 +70,32 @@ function App() {
                 />
               ))}
               <Route
-                  path="/Register"
-                  element={<Form route="/Register/" name={"Register"}  />}
-              />
-
-              <Route
-
-                  path="/authenticator"
-                  element={<Authenticator route="/authenticator/" name={"authenticator"} />}
-              />
-
-
-              <Route
-
-                  path="/Login"
-                  element={<Login/>}
+                path="/Register"
+                element={<Form route="/Register/" name={"Register"} />}
               />
               <Route
-                  path="/Profile"
-                  element={<Profile/>}
+                path="/authenticator"
+                element={<Authenticator route="/authenticator/" name={"authenticator"} />}
               />
-               {/* Protect the /dashboard route */}
-      <Route
-        path="/LoginPath"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
+              <Route
+                path="/Login"
+                element={<Login />}
+              />
+
+              {/* Protect the /dashboard route */}
+
+              <Route
+                path="/Profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+
+                }
+
+              />
 
             </Routes>
-
-
           </div>
         </main>
 

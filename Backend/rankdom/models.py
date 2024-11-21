@@ -10,6 +10,9 @@ class CustomUser(models.Model):
     email = models.EmailField(null=True, blank=True)
     code = models.CharField(max_length=128, blank=True, null=False)
     image = models.ImageField(blank=True, null=False)
+    image_url = models.CharField(max_length=150,blank=True, null=False)
+
+
 
 
 class Questionsset(models.Model):

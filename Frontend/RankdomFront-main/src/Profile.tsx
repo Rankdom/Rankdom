@@ -3,24 +3,36 @@ import './Profile.css';
 import api from "./api";
 
 function Profile() {
-  const [name, setName] = useState('Input Username here');
+  const [name, setName] = useState('');
   const [isEditingName, setIsEditingName] = useState(false);
-  const [profilePic, setProfilePic] = useState('placeholderpic.png?height=96&width=96');
+  const [profilePic, setProfilePic] = useState('');
   const route = "GetProfile/"
   const code = localStorage.getItem('authToken')
+  const [url, setUrl] = useState("");
+
 
 
 
 useEffect(() => {
   const fetchData = async () => {
     try {
+      const route = "GetProfile/"
       const response = await api.post(route, { code });
-      console.log(response.data)
       setName(response.data.username)
-      console.log(name)
-      const base64Image = `data:image/jpeg;base64,${response.data.image}`;
-      console.log(base64Image)
-      setProfilePic(base64Image);
+      if (response.data.image==""){
+        setProfilePic("placeholderpic.png?height=96&width=96")
+
+      }
+      else {
+
+        const base64Image = `data:image/jpeg;base64,${response.data.image}`;
+        setProfilePic(base64Image);
+      }
+      console.log(response.data.image_url)
+      console.log(response.data)
+      setUrl(response.data.image_url)
+
+
     } catch (error) {
       alert(error.message || 'An error occurred');
     }
@@ -30,10 +42,19 @@ useEffect(() => {
 }, []);
 
 
-  // Create a ref for the file input element
+const updateData = async (image: string, image_url: string) => {
+  try {
+    const route = "SetProfile/";
+    const username = name;
+    await api.post(route, { username, code, image, image_url });
+    console.log("Profile updated successfully");
+  } catch (error) {
+    console.error("Error updating profile data:", error);
+    alert(error.message || "An error occurred while updating profile data.");
+  }
+};
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  //Name input logik.
   const handleEditName = () => {
     setIsEditingName(true);
   };
@@ -41,16 +62,28 @@ useEffect(() => {
 
   const handleSaveName = () => {
     setIsEditingName(false);
+    updateData(profilePic,url)
   };
 
   // Handle file upload for picture
-  const handlePictureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files ? event.target.files[0] : null;
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfilePic(imageUrl);
-    }
-  };
+const handlePictureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const file = event.target.files ? event.target.files[0] : null;
+  if (file) {
+    const imageUrl = URL.createObjectURL(file); // Temporary URL for preview
+    setProfilePic(imageUrl); // Update preview
+    const fileName = file.name;
+    setUrl(fileName); // Set file name
+
+    // Use FileReader to convert the file to Base64
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64Image = reader.result as string; // Base64 string
+      const cleanedImage = base64Image.split(",")[1]; // Extract Base64 part
+      updateData(cleanedImage, fileName); // Pass directly to updateData
+    };
+    reader.readAsDataURL(file); // Read the file as a Base64 string
+  }
+};
 
 
   const triggerFileInput = () => {

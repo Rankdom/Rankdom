@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path,include
 
 
-from rankdom.api.views import Authenticate, register, home,CustomUser,login,getProfileInfo
+from rankdom.api.views import Authenticate, register, home,CustomUser,login,getProfileInfo,setProfileInfo
 from rest_framework import routers
 
 from rankdom import views
@@ -24,6 +24,7 @@ urlpatterns = [
     path("Register/", register.as_view(), name="register"),
     path("Login/", login.as_view(), name="login"),
     path("GetProfile/", getProfileInfo.as_view(), name="getProfile"),
+    path("SetProfile/", setProfileInfo.as_view(), name="setProfile"),
     path("authenticator/", Authenticate.as_view(), name="authenticator"),
     path("api/", include(apiRouter.urls), name="api"),
     path('admin/', admin.site.urls),
