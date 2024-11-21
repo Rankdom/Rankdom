@@ -95,8 +95,10 @@ function App() {
               />
               <Route
                 path="/score"
-                element={<Score />} // Add the Score route
-
+                element={<Score />}
+                />
+                  // Add the Score route
+              <Route
                 path="/Profile"
                 element={
                   <ProtectedRoute>
@@ -104,7 +106,6 @@ function App() {
                   </ProtectedRoute>
 
                 }
-
               />
 
             </Routes>
