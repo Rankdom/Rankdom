@@ -21,6 +21,7 @@ useEffect(() => {
       setName(response.data.username)
       if (response.data.image==""){
         setProfilePic("placeholderpic.png?height=96&width=96")
+        console.log("here")
 
       }
       else {

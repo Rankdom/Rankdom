@@ -83,10 +83,7 @@ function App() {
                 path="/Login"
                 element={<Login />}
               />
-              <Route
-                path="/Profile"
-                element={<Profile />}
-              />
+
               {/* Protect the /dashboard route */}
               <Route
                 path="/Profile"
@@ -99,7 +96,7 @@ function App() {
               <Route
                 path="/score"
                 element={<Score />} // Add the Score route
-              />
+
                 path="/Profile"
                 element={
                   <ProtectedRoute>

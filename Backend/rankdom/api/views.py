@@ -51,7 +51,6 @@ class login(APIView):
                 return Response({"message": "Invalid data", "errors": serializer.errors},
                                 status=status.HTTP_400_BAD_REQUEST)
 
-
         return Response({"message": "Invalid data", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -101,7 +100,7 @@ class getProfileInfo(APIView):
                             image_binary = img_file.read()
                             image_base64 = base64.b64encode(image_binary).decode('utf-8')
                     except Exception as e:
-                        image_base64 = "empty"
+                        image_base64 = "default.png"
 
                 return Response({
                     "username": user.username,
