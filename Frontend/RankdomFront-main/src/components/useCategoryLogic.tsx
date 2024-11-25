@@ -64,4 +64,4 @@ const useCategoryLogic = (categories: Category[]) => {
   };
 };
 
-export default useCatego
+export default useCategoryLogic
