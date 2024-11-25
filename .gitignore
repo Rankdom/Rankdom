@@ -25,3 +25,6 @@ dist-ssr
 
 #Database
 *.sqlite3
+
+#PyCache
+*.pyc

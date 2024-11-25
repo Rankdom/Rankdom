@@ -1,36 +1,58 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import CategoryGrid from './CategoryGrid.tsx';
+import QuestionDisplay from './QuestionDisplay.tsx';
+import useFetchCategories from './useFetchCategories.tsx';
+import useCategoryLogic from './useCategoryLogic.tsx';
+import './Score.css';
 
-const movieSubcategories = [
-  { name: 'Action', href: '/movies/action', icon: '🎬' },
-  { name: 'Comedy', href: '/movies/comedy', icon: '😂' },
-  { name: 'Drama', href: '/movies/drama', icon: '🎭' },
-  { name: 'Horror', href: '/movies/horror', icon: '👻' },
-  { name: 'Science Fiction', href: '/movies/science-fiction', icon: '👽' },
-  { name: 'Fantasy', href: '/movies/fantasy', icon: '🧙‍♂️' },
-  { name: 'Romance', href: '/movies/romance', icon: '❤️' },
-  { name: 'Thriller', href: '/movies/thriller', icon: '😱' },
-  { name: 'Mystery', href: '/movies/mystery', icon: '🕵️' },
-  { name: 'Adventure', href: '/movies/adventure', icon: '🧭' },
-  { name: 'Documentary', href: '/movies/documentary', icon: '🎥' },
-  { name: 'Animation', href: '/movies/animation', icon: '🎨' },
-  { name: 'Musical', href: '/movies/musical', icon: '🎵' },
-  { name: 'Historical', href: '/movies/historical', icon: '📜' },
-  { name: 'Western', href: '/movies/western', icon: '🤠' },
+const defaultMovieCategories = [
+  { name: 'Action', href: '/movies/action', icon: '🎬', questions: [] },
+  { name: 'Comedy', href: '/movies/comedy', icon: '😂', questions: [] },
 ];
 
 const Movies: React.FC = () => {
+  const { categories: movieCategories, loading, error } = useFetchCategories(
+    'movies',
+    defaultMovieCategories
+  );
+
+  const {
+    selectedCategory: selectedMovie,
+    currentQuestions,
+    pairCount,
+    handleCategoryClick,
+    handleQuestionSelect,
+    goToScorePage,
+  } = useCategoryLogic(movieCategories);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <div>
-      <h2>Movie Subcategories</h2>
-      <div className="category-grid">
-        {movieSubcategories.map((subcategory) => (
-          <Link key={subcategory.name} to={subcategory.href} className="category-button">
-            <span className="category-icon">{subcategory.icon}</span>
-            <span className="category-name">{subcategory.name}</span>
-          </Link>
-        ))}
-      </div>
+      {!selectedMovie ? (
+        <CategoryGrid
+          title="Choose a Movie Genre"
+          categories={movieCategories}
+          onCategoryClick={handleCategoryClick}
+        />
+      ) : (
+        <div>
+          <h3>{selectedMovie}</h3>
+          {currentQuestions.length > 0 && pairCount < 10 ? (
+            <QuestionDisplay
+              questions={currentQuestions}
+              onQuestionSelect={handleQuestionSelect}
+            />
+          ) : pairCount >= 10 ? (
+            <button className="proceed-to-score-button" onClick={goToScorePage}>
+              Proceed to Score
+            </button>
+          ) : (
+            <p>No Questions available for {selectedMovie}</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };

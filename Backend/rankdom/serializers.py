@@ -39,13 +39,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'code', 'image','image_url']
+        fields = ['username', 'email', 'code', 'image','image_name']
         extra_kwargs = {
             "email": {"required": False, "allow_null": True},
             "code": {"required": False, "allow_null": True},
             "username": {"required": False, "allow_null": True},
             "image": {"required": False, "allow_null": True},
-            "image_url": {"required": False, "allow_null": True},
+            "image_name": {"required": False, "allow_null": True},
 
         }
 
