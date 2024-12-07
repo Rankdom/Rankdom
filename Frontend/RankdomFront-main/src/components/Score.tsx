@@ -30,7 +30,7 @@ const Score: React.FC = () => {
 
 
   useEffect(() => {
-fetch('http://130.162.46.197:8000/api/Answer/', {
+fetch('/api/Answer/', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',

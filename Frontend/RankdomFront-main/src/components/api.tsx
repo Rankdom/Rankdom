@@ -7,7 +7,7 @@ this for storing tokesn in local storage
 
 
 const api = axios.create({
-    baseURL: "http://130.162.46.197:8000"
+    baseURL: "/api"
 });
 api.interceptors.request.use(
     (config) => {

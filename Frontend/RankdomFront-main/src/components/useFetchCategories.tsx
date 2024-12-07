@@ -32,7 +32,7 @@ const useFetchCategories = (supercategory: string, defaultCategories: Category[]
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://130.162.46.197:8000/api/Questions/')
+    fetch('/api/Questions/')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
