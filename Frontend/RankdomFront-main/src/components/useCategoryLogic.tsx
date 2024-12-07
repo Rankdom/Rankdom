@@ -48,8 +48,8 @@ const useCategoryLogic = (categories: Category[]) => {
   };
  //Works Now Score takes input and can be better reflected for all categories.(of course based on category selected)
   const goToScorePage = () => {
-    console.log('Navigating to Score Page with:', { selectedChoices, selectedCategory });
-    navigate('/score', { state: { selectedChoices, selectedCategory } });
+    console.log('Navigating to Score Page with:', { selectedChoices, selectedCategory, });
+    navigate('/score', { state: { selectedChoices, selectedCategory, } });
   };
 
   return {

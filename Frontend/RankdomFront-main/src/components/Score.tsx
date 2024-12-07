@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 import { Bar } from "react-chartjs-2";
 import {
@@ -10,11 +10,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import profile from "../Profile.tsx";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Score: React.FC = () => {
-
   const location = useLocation();
   const { selectedCategory, selectedChoices } = location.state || {}; // Get from state or default to undefined
 
@@ -27,6 +27,22 @@ const Score: React.FC = () => {
   //  chart data, generates that pic form from CHARTJS lib.
   const labels = Object.keys(frequencyMap);
   const dataValues = Object.values(frequencyMap);
+
+
+  useEffect(() => {
+fetch('http://127.0.0.1:8000/api/Answer/', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+        "content_array": [selectedCategory[0]],
+        "user": profiles.name
+  })
+})
+  }, []);
+
 
   const data = {
     labels,
