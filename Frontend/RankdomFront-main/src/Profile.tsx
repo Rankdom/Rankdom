@@ -1,15 +1,21 @@
 import React, {useState, useRef, useEffect} from 'react';
 import './Profile.css';
-import api from "./api";
+import api from "./components/api.tsx";
 
 function Profile() {
   const [name, setName] = useState('');
   const [isEditingName, setIsEditingName] = useState(false);
   const [profilePic, setProfilePic] = useState('');
-  const route = "GetProfile/"
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const code = localStorage.getItem('authToken')
   const [url, setUrl] = useState("");
 
+interface ApiError {
+  message: string; // Error message
+  statusCode?: number; // Optional HTTP status code
+  details?: string; // Optional additional details
+}
 
 
 
@@ -35,7 +41,9 @@ useEffect(() => {
 
 
     } catch (error) {
-      alert(error.message || 'An error occurred');
+      const apiError = error as ApiError;
+  const message = apiError?.message || "An unknown error occurred";
+  alert(message);
     }
   };
 
@@ -51,7 +59,10 @@ const updateData = async (image: string, image_url: string) => {
     console.log("Profile updated successfully");
   } catch (error) {
     console.error("Error updating profile data:", error);
-    alert(error.message || "An error occurred while updating profile data.");
+
+    const apiError = error as ApiError;
+  const message = apiError?.message || "An error occurred while updating profile data.\"";
+  alert(message);
   }
 };
   const fileInputRef = useRef<HTMLInputElement>(null);

@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import profile from "../Profile.tsx";
+
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -30,18 +30,18 @@ const Score: React.FC = () => {
 
 
   useEffect(() => {
-fetch('http://127.0.0.1:8000/api/Answer/', {
+fetch('http://130.162.46.197:8000/api/Answer/', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-        "content_array": [selectedCategory[0]],
-        "user": profiles.name
+        "content_array": [selectedCategory[0]]
+
   })
 })
-  }, []);
+  }, );
 
 
   const data = {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ACCESS_TOKEN } from "./constants.js";
+import { ACCESS_TOKEN } from "./constants.tsx";
 /*
 this for storing tokesn in local storage
  */
@@ -7,7 +7,7 @@ this for storing tokesn in local storage
 
 
 const api = axios.create({
-    baseURL: "http://127.0.0.1:8000"
+    baseURL: "http://130.162.46.197:8000"
 });
 api.interceptors.request.use(
     (config) => {

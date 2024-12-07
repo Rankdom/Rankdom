@@ -1,10 +1,16 @@
 import { useState} from "react";
 import '../Form.css';
 import {useNavigate} from "react-router-dom";
-import api from "../api.js";
+import api from "./api.tsx";
 import LoadingIndicator from "./loading";
 
-function Form({route,name}) {
+interface FormProps {
+    route: string; // `route` should be a string
+    name: string;  // `name` should be a string
+}
+
+
+function Form({route,name} : FormProps) {
     route="Register/"
     const [email,setEmail] =useState("")
     const [username,setUsername] =useState("")
